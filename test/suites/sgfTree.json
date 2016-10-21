@@ -1,0 +1,35 @@
+{ "suite": "Tree",
+  "handler": "sgf",
+  "it": "should parse: {label}",
+  "cases": [
+    { "label": "Minimal game tree",
+      "sgf": "(;)",
+      "collection": [
+        {
+          "nodes": [ {} ]
+        }
+      ]
+    },
+    { "label": "Game tree with variations",
+      "sgf": "(;(;)(;)(;))",
+      "collection": [
+        {
+          "nodes": [ {} ],
+          "variations": [
+            { "nodes": [ {} ] },
+            { "nodes": [ {} ] },
+            { "nodes": [ {} ] }
+          ]
+        }
+      ]
+    },
+    { "label": "Multiple game trees",
+      "sgf": "(;)(;)(;)",
+      "collection": [
+        { "nodes": [ {} ] },
+        { "nodes": [ {} ] },
+        { "nodes": [ {} ] }
+      ]
+    }
+  ]
+}

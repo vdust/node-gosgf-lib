@@ -1,0 +1,667 @@
+{ "suite": "Properties",
+  "handler": "sgf",
+  "it": "should decode property: {label}",
+  "groupFormat": "[{group}]",
+  "cases": [
+    { "group": "Move properties" },
+
+    { "label": "Black move (B)",
+      "sgf": "(;B[aa])",
+      "collection": [
+        {
+          "nodes": [ { "B": { "x": 0, "y": 0 } } ]
+        }
+      ]
+    },
+    { "label": "White move (W)",
+      "sgf": "(;W[aa])",
+      "collection": [
+        {
+          "nodes": [ { "W": { "x": 0, "y": 0 } } ]
+        }
+      ]
+    },
+    { "label": "Illegal move (KO)",
+      "sgf": "(;B[aa]KO[])",
+      "collection": [
+        {
+          "nodes": [ { "B": { "x": 0, "y": 0 }, "KO": true } ]
+        }
+      ]
+    },
+    { "label": "Move number (MN)",
+      "sgf": "(;B[aa]MN[42])",
+      "collection": [
+        {
+          "nodes": [ { "B": { "x": 0, "y": 0 }, "MN": 42 } ]
+        }
+      ]
+    },
+
+    { "group": "Setup properties" },
+
+    { "label": "Add black (AB)",
+      "sgf": "(;AB[aa:bb])",
+      "collection": [
+        {
+          "nodes": [ { "AB": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 0 },
+            { "x": 0, "y": 1 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Add black (AW)",
+      "sgf": "(;AW[aa:bb])",
+      "collection": [
+        {
+          "nodes": [ { "AW": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 0 },
+            { "x": 0, "y": 1 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Clear (AE)",
+      "sgf": "(;AE[aa:bb])",
+      "collection": [
+        {
+          "nodes": [ { "AE": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 0 },
+            { "x": 0, "y": 1 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Next player (PL)",
+      "sgf": "(;PL[B])",
+      "collection": [
+        {
+          "nodes": [ { "PL": 1 } ]
+        }
+      ]
+    },
+
+    { "group": "Annotation properties" },
+
+    { "label": "Comment (C)",
+      "sgf": "(;C[Some comment])",
+      "collection": [
+        {
+          "nodes": [ { "C": "Some comment" } ]
+        }
+      ]
+    },
+    { "label": "Even position (DM)",
+      "sgf": "(;DM[1])",
+      "collection": [
+        {
+          "nodes": [ { "DM": 1 } ]
+        }
+      ]
+    },
+    { "label": "Good for black (GB)",
+      "sgf": "(;GB[1])",
+      "collection": [
+        {
+          "nodes": [ { "GB": 1 } ]
+        }
+      ]
+    },
+    { "label": "Good for white (GW)",
+      "sgf": "(;GW[1])",
+      "collection": [
+        {
+          "nodes": [ { "GW": 1 } ]
+        }
+      ]
+    },
+    { "label": "Hotspot (HO)",
+      "sgf": "(;HO[1])",
+      "collection": [
+        {
+          "nodes": [ { "HO": 1 } ]
+        }
+      ]
+    },
+    { "label": "Name (N)",
+      "sgf": "(;N[Node name])",
+      "collection": [
+        {
+          "nodes": [ { "N": "Node name" } ]
+        }
+      ]
+    },
+    { "label": "Unclear position (UC)",
+      "sgf": "(;UC[1])",
+      "collection": [
+        {
+          "nodes": [ { "UC": 1 } ]
+        }
+      ]
+    },
+    { "label": "Position value (V)",
+      "sgf": "(;V[5])",
+      "collection": [
+        {
+          "nodes": [ { "V": 5 } ]
+        }
+      ]
+    },
+
+    { "group": "Move annotation properties" },
+
+    { "label": "Bad move (BM)",
+      "sgf": "(;B[aa]BM[1])",
+      "collection": [
+        {
+          "nodes": [ { "B": { "x": 0, "y": 0 }, "BM": 1 } ]
+        }
+      ]
+    },
+    { "label": "Doubtful move (DO)",
+      "sgf": "(;B[aa]DO[])",
+      "collection": [
+        {
+          "nodes": [ { "B": { "x": 0, "y": 0 }, "DO": true } ]
+        }
+      ]
+    },
+    { "label": "Interesting move (IT)",
+      "sgf": "(;B[aa]IT[])",
+      "collection": [
+        {
+          "nodes": [ { "B": { "x": 0, "y": 0 }, "IT": true } ]
+        }
+      ]
+    },
+    { "label": "Tesuji (TE)",
+      "sgf": "(;B[aa]TE[1])",
+      "collection": [
+        {
+          "nodes": [ { "B": { "x": 0, "y": 0 }, "TE": 1 } ]
+        }
+      ]
+    },
+
+    { "group": "Markup properties" },
+
+    { "label": "Arrow (AR)",
+      "sgf": "(;AR[aa:bb][aa:ab])",
+      "collection": [
+        {
+          "nodes": [ { "AR": [
+            { "first": { "x": 0, "y": 0 },
+              "second": { "x": 1, "y": 1 } },
+            { "first": { "x": 0, "y": 0 },
+              "second": { "x": 0, "y": 1 } }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Circle (CR)",
+      "sgf": "(;CR[aa:ab][cc])",
+      "collection": [
+        {
+          "nodes": [ { "CR": [
+            { "x": 0, "y": 0 },
+            { "x": 0, "y": 1 },
+            { "x": 2, "y": 2 }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Label (LB)",
+      "sgf": "(;LB[aa:A])",
+      "collection": [
+        {
+          "nodes": [ { "LB": [
+            { "first": { "x": 0, "y": 0 },
+              "second": "A" }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Line (LN)",
+      "sgf": "(;LN[aa:bb][aa:ab])",
+      "collection": [
+        {
+          "nodes": [ { "LN": [
+            { "first": { "x": 0, "y": 0 },
+              "second": { "x": 1, "y": 1 } },
+            { "first": { "x": 0, "y": 0 },
+              "second": { "x": 0, "y": 1 } }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Cross mark (MA)",
+      "sgf": "(;MA[aa][bb])",
+      "collection": [
+        {
+          "nodes": [ { "MA": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Select (SL)",
+      "sgf": "(;SL[aa][bb])",
+      "collection": [
+        {
+          "nodes": [ { "SL": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Square mark (SQ)",
+      "sgf": "(;SQ[aa][bb])",
+      "collection": [
+        {
+          "nodes": [ { "SQ": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Triangle mark (TR)",
+      "sgf": "(;TR[aa][bb])",
+      "collection": [
+        {
+          "nodes": [ { "TR": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    },
+
+    { "group": "Root properties" },
+
+    { "label": "Application (AP)",
+      "sgf": "(;AP[test:1.2.3])",
+      "collection": [
+        {
+          "nodes": [ { "AP": { "first": "test", "second": "1.2.3" } } ]
+        }
+      ]
+    },
+    { "label": "Charset (CA)",
+      "sgf": "(;CA[utf8])",
+      "collection": [
+        {
+          "nodes": [ { "CA": "utf8" } ]
+        }
+      ]
+    },
+    { "label": "CA[latin1] (default) with text property",
+      "sgf": "(;C[\u00e9\u00e0\u00fc])",
+      "collection": [
+        {
+          "nodes": [ { "C": "éàü" } ]
+        }
+      ]
+    },
+    { "label": "CA[utf8] with text property",
+      "sgf": "(;CA[utf8]C[\u00c3\u00a9\u00c3\u00a0\u00c3\u00bc])",
+      "collection": [
+        {
+          "nodes": [ { "CA": "utf8", "C": "éàü" } ]
+        }
+      ]
+    },
+    { "label": "Format (FF)",
+      "sgf": "(;FF[4])",
+      "collection": [
+        {
+          "nodes": [ { "FF": 4 } ]
+        }
+      ]
+    },
+    { "label": "Game type (GM)",
+      "sgf": "(;GM[1])",
+      "collection": [
+        {
+          "nodes": [ { "GM": 1 } ]
+        }
+      ]
+    },
+    { "label": "Variation mode (ST)",
+      "sgf": "(;ST[0])",
+      "collection": [
+        {
+          "nodes": [ { "ST": 0 } ]
+        }
+      ]
+    },
+    { "label": "Board size (SZ)",
+      "sgf": "(;SZ[19])(;SZ[19:19])",
+      "collection": [
+        {
+          "nodes": [ { "SZ": [ 19, 19 ] } ]
+        },
+        {
+          "nodes": [ { "SZ": [ 19, 19 ] } ]
+        }
+      ]
+    },
+
+    { "group": "Game info properties" },
+
+    { "label": "Annotator (AN)",
+      "sgf": "(;AN[Someone])",
+      "collection": [
+        {
+          "nodes": [ { "AN": "Someone" } ]
+        }
+      ]
+    },
+    { "label": "Rank of black (BR)",
+      "sgf": "(;BR[1d])",
+      "collection": [
+        {
+          "nodes": [ { "BR": "1d" } ]
+        }
+      ]
+    },
+    { "label": "Black team (BT)",
+      "sgf": "(;BT[Black Team])",
+      "collection": [
+        {
+          "nodes": [ { "BT": "Black Team" } ]
+        }
+      ]
+    },
+    { "label": "Copyright (CP)",
+      "sgf": "(;CP[2016, Someone])",
+      "collection": [
+        {
+          "nodes": [ { "CP": "2016, Someone" } ]
+        }
+      ]
+    },
+    { "label": "Date (DT)",
+      "sgf": "(;DT[2016-01-01])",
+      "collection": [
+        {
+          "nodes": [ { "DT": [ "2016-01-01" ] } ]
+        }
+      ]
+    },
+    { "label": "Date (DT) multiple (condensed form)",
+      "sgf": "(;DT[2014,2015-01,02,03-04,05,04-01,2016-01-02])",
+      "collection": [
+        {
+          "nodes": [ { "DT": [
+            "2014",
+            "2015-01",
+            "2015-02",
+            "2015-03-04",
+            "2015-03-05",
+            "2015-04-01",
+            "2016-01-02"
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Event name (EV)",
+      "sgf": "(;EV[Some event])",
+      "collection": [
+        {
+          "nodes": [ { "EV": "Some event" } ]
+        }
+      ]
+    },
+    { "label": "Game name (GN)",
+      "sgf": "(;GN[Some name])",
+      "collection": [
+        {
+          "nodes": [ { "GN": "Some name" } ]
+        }
+      ]
+    },
+    { "label": "Game extra info (GC)",
+      "sgf": "(;GC[Some info])",
+      "collection": [
+        {
+          "nodes": [ { "GC": "Some info" } ]
+        }
+      ]
+    },
+    { "label": "Opening info (ON)",
+      "sgf": "(;ON[san-ren-sei])",
+      "collection": [
+        {
+          "nodes": [ { "ON": "san-ren-sei" } ]
+        }
+      ]
+    },
+    { "label": "Overtime (OT)",
+      "sgf": "(;OT[5x30 byo-yomi])",
+      "collection": [
+        {
+          "nodes": [ { "OT": "5x30 byo-yomi" } ]
+        }
+      ]
+    },
+    { "label": "Name of Black player (PB)",
+      "sgf": "(;PB[Some Name])",
+      "collection": [
+        {
+          "nodes": [ { "PB": "Some Name" } ]
+        }
+      ]
+    },
+    { "label": "Place (PC)",
+      "sgf": "(;PC[Somewhere])",
+      "collection": [
+        {
+          "nodes": [ { "PC": "Somewhere" } ]
+        }
+      ]
+    },
+    { "label": "Name of White player (PW)",
+      "sgf": "(;PW[Some Name])",
+      "collection": [
+        {
+          "nodes": [ { "PW": "Some Name" } ]
+        }
+      ]
+    },
+    { "label": "Result (RE)",
+      "sgf": "(;RE[W+0.5])",
+      "collection": [
+        {
+          "nodes": [ { "RE": "W+0.5" } ]
+        }
+      ]
+    },
+    { "label": "Round info",
+      "sgf": "(;RO[02 (league)])",
+      "collection": [
+        {
+          "nodes": [ { "RO": "02 (league)" } ]
+        }
+      ]
+    },
+    { "label": "Rules (RU)",
+      "sgf": "(;RU[Japanese])",
+      "collection": [
+        {
+          "nodes": [ { "RU": "Japanese" } ]
+        }
+      ]
+    },
+    { "label": "Source (SO)",
+      "sgf": "(;SO[Example])",
+      "collection": [
+        {
+          "nodes": [ { "SO": "Example" } ]
+        }
+      ]
+    },
+    { "label": "Time limit (TM)",
+      "sgf": "(;TM[1800])",
+      "collection": [
+        {
+          "nodes": [ { "TM": 1800 } ]
+        }
+      ]
+    },
+    { "label": "Recorder name (US)",
+      "sgf": "(;US[Someone])",
+      "collection": [
+        {
+          "nodes": [ { "US": "Someone" } ]
+        }
+      ]
+    },
+    { "label": "Rank of White (WR)",
+      "sgf": "(;WR[Honinbo])",
+      "collection": [
+        {
+          "nodes": [ { "WR": "Honinbo" } ]
+        }
+      ]
+    },
+    { "label": "White Team (WT)",
+      "sgf": "(;WT[White Team])",
+      "collection": [
+        {
+          "nodes": [ { "WT": "White Team" } ]
+        }
+      ]
+    },
+
+    { "group": "Timing properties" },
+
+    { "label": "Time left for black (BL)",
+      "sgf": "(;BL[100])",
+      "collection": [
+        {
+          "nodes": [ { "BL": 100 } ]
+        }
+      ]
+    },
+    { "label": "Moves left for black in period (OB)",
+      "sgf": "(;OB[3])",
+      "collection": [
+        {
+          "nodes": [ { "OB": 3 } ]
+        }
+      ]
+    },
+    { "label": "Time left for white (WL)",
+      "sgf": "(;WL[100])",
+      "collection": [
+        {
+          "nodes": [ { "WL": 100 } ]
+        }
+      ]
+    },
+    { "label": "Time left for white (OW)",
+      "sgf": "(;OW[3])",
+      "collection": [
+        {
+          "nodes": [ { "OW": 3 } ]
+        }
+      ]
+    },
+
+    { "group": "Miscelleanous properties" },
+
+    { "label": "Figure setup (FG)",
+      "sgf": "(;FG[515:Some figure];FG[])",
+      "collection": [
+        {
+          "nodes": [
+            { "FG": {
+              "first": 515,
+              "second": "Some figure"
+            } },
+            { "FG": {
+                "first": 32768,
+                "second": ""
+            } }
+          ]
+        }
+      ]
+    },
+    { "label": "Move numbers print mode [PM]",
+      "sgf": "(;PM[2])",
+      "collection": [
+        {
+          "nodes": [ { "PM": 2 } ]
+        }
+      ]
+    },
+    { "label": "Board view (VW)",
+      "sgf": "(;VW[aa:bb])",
+      "collection": [
+        {
+          "nodes": [ { "VW": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 0 },
+            { "x": 0, "y": 1 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    },
+    
+    { "group": "Go (GM[1]) specific properties" },
+
+    { "label": "Handicap (HA)",
+      "sgf": "(;HA[2])",
+      "collection": [
+        {
+          "nodes": [ { "HA": 2 } ]
+        }
+      ]
+    },
+    { "label": "Komi (KM)",
+      "sgf": "(;KM[6.5])",
+      "collection": [
+        {
+          "nodes": [ { "KM": 6.5 } ]
+        }
+      ]
+    },
+    { "label": "Black territory (TB)",
+      "sgf": "(;TB[aa:bb])",
+      "collection": [
+        {
+          "nodes": [ { "TB": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 0 },
+            { "x": 0, "y": 1 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    },
+    { "label": "Handicap (TW)",
+      "sgf": "(;TW[aa:bb])",
+      "collection": [
+        {
+          "nodes": [ { "TW": [
+            { "x": 0, "y": 0 },
+            { "x": 1, "y": 0 },
+            { "x": 0, "y": 1 },
+            { "x": 1, "y": 1 }
+          ] } ]
+        }
+      ]
+    }
+  ]
+}

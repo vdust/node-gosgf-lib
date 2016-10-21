@@ -1,0 +1,28 @@
+{
+  "source": {
+    "include": [
+      "lib"
+    ]
+  },
+  "opts": {
+    "template": "./node_modules/ink-docstrap/template",
+    "destination": "./doc/",
+    "readme": "./README.md",
+    "recurse": true
+  },
+  "plugins": [
+    "plugins/markdown",
+    "plugins/underscore"
+  ],
+  "templates": {
+    "cleverLinks": true,
+    "linenums": true,
+    "search": true,
+    "sort": true,
+    "theme": "spacelab"
+  },
+  "markdown": {
+    "parser": "gfm",
+    "hardwarp": true
+  }
+}

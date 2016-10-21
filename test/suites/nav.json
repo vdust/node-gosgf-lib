@@ -1,0 +1,380 @@
+{ "suite": "Nav",
+  "handler": "nav",
+  "it": "should {should}",
+  "options": {
+    "sgf": "(;SZ[5]GM[1]EV[Test];B[aa];W[ab];B[ba];W[bb](;B[dd](;W[ca])(;W[cc])(;W[dd]))(;B[ca];W[cb];B[ee];W[da]))"
+  },
+  "cases": [
+    { "group": "#moveTo()", "merge": {
+      "method": "moveTo"
+    } },
+
+    { "should": "move to the 'root' node",
+      "arguments": ["root"],
+      "updateBefore": [1],
+      "return": true,
+      "path": [0],
+      "node": {
+        "SZ": [5, 5],
+        "GM": 1,
+        "EV": "Test"
+      }
+    },
+    { "should": "move to the 'first' (root) node",
+      "arguments": ["first"],
+      "updateBefore": [1],
+      "return": true,
+      "path": [0],
+      "node": {
+        "SZ": [5, 5],
+        "GM": 1,
+        "EV": "Test"
+      }
+    },
+    { "should": "move to the previous node",
+      "arguments": ["prev"],
+      "note": " - same gametree",
+      "updateBefore": [2],
+      "return": true,
+      "path": [1],
+      "node": {
+        "B": { "x": 0, "y": 0 }
+      }
+    },
+    { "should": "move to the previous node from a child variation",
+      "arguments": ["prev"],
+      "updateBefore": [1, 0],
+      "return": true,
+      "path": [4],
+      "node": {
+        "W": { "x": 1, "y": 1 }
+      }
+    },
+    { "should": "move to the next node, same variation",
+      "arguments": ["next"],
+      "return": true,
+      "path": [1],
+      "node": {
+        "B": { "x": 0, "y": 0 }
+      }
+    },
+    { "should": "move to the first child variation node from last parent node",
+      "arguments": ["next"],
+      "updateBefore": [4],
+      "return": true,
+      "path": [0, 0],
+      "node": {
+        "B": { "x": 3, "y": 3 }
+      }
+    },
+    { "should": "move to the last node in first variations path from root",
+      "arguments": ["last"],
+      "return": true,
+      "path": [0, 0, 0],
+      "node": {
+        "W": { "x": 2, "y": 0 }
+      }
+    },
+    { "should": "move to the last node from terminal variation node",
+      "arguments": ["last"],
+      "updateBefore": [1, 0],
+      "return": true,
+      "path": [1, 3],
+      "node": {
+        "W": { "x": 3, "y": 0 }
+      }
+    },
+    { "should": "move to the first sibling variation",
+      "arguments": ["@first"],
+      "updateBefore": [0, 1, 0],
+      "return": true,
+      "path": [0, 0, 0],
+      "node": {
+        "W": { "x": 2, "y": 0 }
+      }
+    },
+    { "should": "move to the previous sibling variation",
+      "arguments": ["@prev"],
+      "updateBefore": [0, 1, 0],
+      "return": true,
+      "path": [0, 0, 0],
+      "node": {
+        "W": { "x": 2, "y": 0 }
+      }
+    },
+    { "should": "move to the next sibling variation",
+      "arguments": ["@next"],
+      "updateBefore": [0, 1, 0],
+      "return": true,
+      "path": [0, 2, 0],
+      "node": {
+        "W": { "x": 3, "y": 3 }
+      }
+    },
+    { "should": "move to the last sibling variation",
+      "arguments": ["@last"],
+      "updateBefore": [0, 1, 0],
+      "return": true,
+      "path": [0, 2, 0],
+      "node": {
+        "W": { "x": 3, "y": 3 }
+      }
+    },
+    { "should": "cycle to the first sibling variation from last",
+      "arguments": ["@>"],
+      "updateBefore": [0, 2, 0],
+      "return": true,
+      "path": [0, 0, 0],
+      "node": {
+        "W": { "x": 2, "y": 0 }
+      }
+    },
+    { "should": "reverse cycle to the last sibling variation from first",
+      "arguments": ["@<"],
+      "updateBefore": [0, 0, 0],
+      "return": true,
+      "path": [0, 2, 0],
+      "node": {
+        "W": { "x": 3, "y": 3 }
+      }
+    },
+    { "should": "move to root node with (path argument)",
+      "arguments": [[0]],
+      "return": true,
+      "path": [0],
+      "node": {
+        "SZ": [5, 5],
+        "GM": 1,
+        "EV": "Test"
+      }
+    },
+    { "should": "move to a node in the main variation (path argument)",
+      "arguments": [[2]],
+      "return": true,
+      "path": [2],
+      "node": {
+        "W": { "x": 0, "y": 1 }
+      }
+    },
+    { "should": "move to any node in any variation (path argument)",
+      "arguments": [[0, 1, 0]],
+      "return": true,
+      "path": [0, 1, 0],
+      "node": {
+        "W": { "x": 2, "y": 2 }
+      }
+    },
+
+    { "group": "#getNodes()", "merge": {
+      "method": "getNodes",
+      "normalize": "nodes"
+    } },
+
+    { "should": "get nodes from root to cursor path",
+      "updateBefore": [ 0, 1, 0 ],
+      "return": [
+        { "SZ": [5, 5],
+          "GM": 1,
+          "EV": "Test" },
+        { "B": { "x": 0, "y": 0 } },
+        { "W": { "x": 0, "y": 1 } },
+        { "B": { "x": 1, "y": 0 } },
+        { "W": { "x": 1, "y": 1 } },
+        { "B": { "x": 3, "y": 3 } },
+        { "W": { "x": 2, "y": 2 } }
+      ]
+    },
+    { "should": "get nodes from a given path",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 4 ] ],
+      "return": [
+        { "B": { "x": 3, "y": 3 } },
+        { "W": { "x": 2, "y": 2 } }
+      ]
+    },
+    { "should": "get empty list if given path is cursor path",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 0, 1, 0 ] ],
+      "return": []
+    },
+    { "should": "get empty list if given path is not a parent",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 1, 2 ] ],
+      "return": []
+    },
+
+    { "group": "#length()", "merge": {
+      "method": "length"
+    } },
+
+    { "should": "return 1 on root node",
+      "return": 1
+    },
+    { "should": "return path length",
+      "updateBefore": [ 0, 1, 0 ],
+      "return": 7
+    },
+
+    { "group": "#variationsCount()", "merge": {
+      "method": "variationsCount"
+    } },
+
+    { "should": "return 1 for root node",
+      "updateBefore": [ 0 ],
+      "return": 1
+    },
+    { "should": "return 1 on any node that is not the first node of a variation",
+      "updateBefore": [ 1, 2 ],
+      "return": 1
+    },
+    { "should": "return variations count on any first node of a variation",
+      "updateBefore": [ 0, 1, 0 ],
+      "return": 3
+    },
+
+    { "group": "#isPath()", "merge": {
+      "method": "isPath"
+    } },
+
+    { "should": "return true if cursor path matches",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 0, 1, 0 ] ],
+      "return": true
+    },
+    { "should": "return false if cursor path is shorter",
+      "updateBefore": [ 1 ],
+      "arguments": [ [ 0, 1, 0 ] ],
+      "return": false
+    },
+    { "should": "return false if cursor path is longer",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 1 ] ],
+      "return": false
+    },
+    { "should": "return false if cursor path doesn't match",
+      "updateBefore": [ 1, 1 ],
+      "arguments": [ [ 1, 2 ] ],
+      "return": false
+    },
+
+    { "group": "#isRoot()", "merge": {
+      "method": "isRoot"
+    } },
+
+    { "should": "return true on root node",
+      "return": true
+    },
+    { "should": "return false on non-root nodes",
+      "updateBefore": [ 1, 1 ],
+      "return": false
+    },
+
+    { "group": "#hasVariations()", "merge": {
+      "method": "hasVariations"
+    } },
+
+    { "should": "return true if node has variations",
+      "updateBefore": [ 0, 1, 0 ],
+      "return": true
+    },
+    { "should": "return false if the node has no variations",
+      "updateBefore": [ 1, 1 ],
+      "return": false
+    },
+
+    { "group": "#ascendantOf()", "merge": {
+      "method": "ascendantOf"
+    } },
+
+    { "should": "return true if cursor path is 'root'",
+      "updateBefore": [ 0 ],
+      "arguments": [ [ 1, 2 ] ],
+      "return": true
+    },
+    { "should": "return true if path is in a children variation",
+      "updateBefore": [ 0, 0 ],
+      "arguments": [ [ 0, 1, 0 ] ],
+      "return": true
+    },
+    { "should": "return false if path is a parent of cursor",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 0, 0 ] ],
+      "return": false
+    },
+    { "should": "return false if path is a parent of cursor in the same variation",
+      "updateBefore": [ 1, 2 ],
+      "arguments": [ [ 1, 1 ] ],
+      "return": false
+    },
+    { "should": "return null if paths are not related",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 1, 1 ] ],
+      "return": null
+    },
+
+    { "group": "#descendantOf()", "merge": {
+      "method": "descendantOf"
+    } },
+
+    { "should": "return true if path is 'root'",
+      "updateBefore": [ 1, 2 ],
+      "arguments": [ [ 0 ] ],
+      "return": true
+    },
+    { "should": "return true if path is in a parent variation",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 0, 0 ] ],
+      "return": true
+    },
+    { "should": "return false if path is a descendant of cursor",
+      "updateBefore": [ 0, 0 ],
+      "arguments": [ [ 0, 1, 0 ] ],
+      "return": false
+    },
+    { "should": "return false if path is a descendant of cursor in the same variation",
+      "updateBefore": [ 1, 1 ],
+      "arguments": [ [ 1, 2 ] ],
+      "return": false
+    },
+    { "should": "return null if paths are not related",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 1, 1 ] ],
+      "return": null
+    },
+
+    { "group": "#relatedTo()", "merge": {
+      "method": "relatedTo"
+    } },
+
+    { "should": "return true if cursor path is 'root'",
+      "updateBefore": [ 0 ],
+      "arguments": [ [ 0, 1, 0 ] ],
+      "return": true
+    },
+    { "should": "return true if paths are equal",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 0, 1, 0 ] ],
+      "return": true
+    },
+    { "should": "return true if paths are nodes of the same variation",
+      "updateBefore": [ 1, 1 ],
+      "arguments": [ [ 1, 3 ] ],
+      "return": true
+    },
+    { "should": "return true if path is a descendant variation of cursor",
+      "updateBefore": [ 0, 0 ],
+      "arguments": [ [ 0, 1, 0 ] ],
+      "return": true
+    },
+    { "should": "return true if path is an ascendant variation of cursor",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 0, 0 ] ],
+      "return": true
+    },
+    { "should": "return false if variations in path differ",
+      "updateBefore": [ 0, 1, 0 ],
+      "arguments": [ [ 1, 1 ] ],
+      "return": false
+    }
+  ]
+}

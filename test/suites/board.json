@@ -1,0 +1,215 @@
+{ "suite": "Board",
+  "handler": "board",
+  "it": "should {should}",
+  "options": {
+    "sgf": "(;SZ[5]GM[1]EV[Test];B[aa];W[ab];B[ba];W[bb](;B[dd](;W[ca])(;W[cc])(;W[dd]))(;AB[ca][ee]AW[cb][ad:cd]PL[W])(;B[cc]TR[aa:ba]SQ[ab:bb][dd]CR[cc]))"
+  },
+  "cases": [
+    { "should": "setup an empty board",
+      "path": [ 0 ],
+      "board": [
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ],
+      "infos": {
+        "event": "Test"
+      },
+      "nextPlayer": 1
+    },
+    { "should": "setup board position with one black and one white stone",
+      "path": [ 2 ],
+      "board": [
+        { "color": 1 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 2, "mark": { "last": true } },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ],
+      "infos": {
+        "event": "Test"
+      },
+      "capturedBy": {
+        "black": 0,
+        "white": 0
+      },
+      "nextPlayer": 1
+    },
+    { "should": "setup board position with black stones captured",
+      "path": [ 0, 0, 0 ],
+      "board": [
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 2, "mark": { "last": true } },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 2 },
+        { "color": 2 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 1 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ],
+      "infos": {
+        "event": "Test"
+      },
+      "capturedBy": {
+        "black": 0,
+        "white": 2
+      },
+      "nextPlayer": 1
+    },
+    { "should": "add black and white stones and set next player",
+      "path": [ 1, 0 ],
+      "board": [
+        { "color": 1 },
+        { "color": 1 },
+        { "color": 1 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 2 },
+        { "color": 2 },
+        { "color": 2 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 2 },
+        { "color": 2 },
+        { "color": 2 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 1 }
+      ],
+      "infos": {
+        "event": "Test"
+      },
+      "capturedBy": {
+        "black": 0,
+        "white": 0
+      },
+      "nextPlayer": 2
+    },
+    { "should": "setup board position with stones and marks",
+      "path": [ 2, 0 ],
+      "board": [
+        { "color": 1, "mark": { "type": "triangle" } },
+        { "color": 1, "mark": { "type": "triangle" } },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 2, "mark": { "type": "square" } },
+        { "color": 2, "mark": { "type": "square" } },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 1, "mark": { "last": true, "type": "circle" } },
+        { "color": 0 },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0, "mark": { "type": "square" } },
+        { "color": 0 },
+        
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ],
+      "infos": {
+        "event": "Test"
+      },
+      "capturedBy": {
+        "black": 0,
+        "white": 0
+      },
+      "nextPlayer": 2
+    }
+  ]
+}
