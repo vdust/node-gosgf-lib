@@ -8,8 +8,4 @@
 *.tbz2
 *.patch
 
-node_modules
 doc
-dist
-
-npm-debug*

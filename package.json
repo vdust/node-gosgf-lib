@@ -5,6 +5,7 @@
   "main": "lib/gosgf.js",
   "scripts": {
     "test": "mocha",
+    "prepublish": "mkdir -p ./dist && browserify lib/gosgf.js | uglifyjs - -m > dist/gosgf.min.js",
     "build-doc": "jsdoc -c ./jsdoc.json"
   },
   "repository": {
@@ -24,9 +25,12 @@
   },
   "homepage": "https://github.com/vdust/node-gosgf-lib#readme",
   "devDependencies": {
+    "browserify": "^13.1.1",
     "expect": "^1.20.2",
     "ink-docstrap": "^1.3.0",
     "jsdoc": "^3.4.2",
-    "mocha": "^3.1.0"
-  }
+    "mocha": "^3.1.0",
+    "uglify-js": "^2.7.4"
+  },
+  "dependencies": {}
 }
