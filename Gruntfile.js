@@ -21,7 +21,8 @@ module.exports = function (grunt) {
     browserify: {
       dist: {
         files: {
-          'dist/gosgf.js': [ 'lib/gosgf.js' ]
+          'dist/gosgf.js': [ 'lib/gosgf.js' ],
+          'dist/gosvg.js': [ 'lib/svg.js' ]
         }
       }
     },
@@ -39,7 +40,8 @@ module.exports = function (grunt) {
       },
       distmin: {
         files: {
-          'dist/gosgf.min.js': 'dist/gosgf.js'
+          'dist/gosgf.min.js': 'dist/gosgf.js',
+          'dist/gosvg.min.js': 'dist/gosvg.js'
         }
       }
     }
