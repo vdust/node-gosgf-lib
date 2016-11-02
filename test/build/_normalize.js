@@ -74,7 +74,7 @@ function normalizeGametrees(gametrees, options) {
  * @param {object} [options] - Options to modify normalization behaviour
  * @param {boolean} options.keepRaw - Whether to keep `_raw` property on nodes
  *
- * @return {GoSgf.Spec.Node[]} An array of normalized nodes.
+ * @return {GoSgf.GameTree.Node[]} An array of normalized nodes.
  *
  * @alias Tests.normalize.nodes
  */
@@ -90,11 +90,11 @@ function normalizeNodes(array, options) {
 /**
  * Normalize an object to a node instance.
  * 
- * @param {GoSgf.Spec.Node} node - An object
+ * @param {GoSgf.GameTree.Node} node - An object
  * @param {object} [options] - Options to modify normalization behaviour
  * @param {boolean} options.keepRaw - Whether to keep `_raw` property on nodes
  *
- * @return {GoSgf.Spec.Node} A newly created Node instance.
+ * @return {GoSgf.GameTree.Node} A newly created Node instance.
  *
  * @alias Tests.normalize.node
  */
@@ -103,7 +103,7 @@ function normalizeNode(obj, options) {
 
   if (!obj) return obj;
 
-  node = new (GoSgf.Spec.Node)();
+  node = new (GoSgf.GameTree.Node)();
 
   for (var k in obj) {
     if (k === '_raw') continue;
