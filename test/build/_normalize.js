@@ -9,8 +9,10 @@ var GoSgf = require('../../lib/gosgf.js');
 
 module.exports = {
   board: normalizeBoard,
+  gametree: normalizeGametree,
   gametrees: normalizeGametrees,
   node: normalizeNode,
+  nodeinfo: normalizeNodeInfo,
   nodes: normalizeNodes,
   value: normalizeValue
 };
@@ -20,7 +22,13 @@ module.exports = {
  *
  * Convert object describing intersections to Intersections instances.
  *
- * @param {Array} 
+ * @param {Array} board - An array describing board instersections data
+ * @param {object} [options] - Options to modify normalization behaviour
+ * @param {boolean} options.keepRaw - Whether to keep `_raw` property on nodes
+ *
+ * @return {GoSgf.Board.Intersection[]}
+ *
+ * @alias Tests.normalize.board
  */
 function normalizeBoard(board, options) {
   var i, itn;
@@ -32,6 +40,24 @@ function normalizeBoard(board, options) {
   }
 
   return board;
+}
+
+/**
+ * Normalize a gametree.
+ *
+ * @param {object} obj - An object describing a gametree
+ * @param {object} [options] - Options to modify normalization behaviour
+ * @param {boolean} options.keepRaw - Whether to keep `_raw` property on nodes
+ *
+ * @return {GoSgf.GameTree} A GameTree instance.
+ *
+ * @alias Tests.normalize.gametree
+ */
+function normalizeGametree(obj, options) {
+  return new (GoSgf.GameTree)(
+    normalizeNodes(obj.nodes || [ {} ], options),
+    normalizeGametrees(obj.variations || [], options)
+  );
 }
 
 /**
@@ -56,10 +82,7 @@ function normalizeGametrees(gametrees, options) {
   if (!gametrees) return gametrees;
 
   for (var i = 0; i < gametrees.length; i++) {
-    gametrees[i] = new (GoSgf.GameTree)(
-      normalizeNodes(gametrees[i].nodes || [ {} ], options),
-      normalizeGametrees(gametrees[i].variations || [], options)
-    );
+    gametrees[i] = normalizeGametree(gametrees[i], options);
   }
 
   return gametrees;
@@ -90,7 +113,7 @@ function normalizeNodes(array, options) {
 /**
  * Normalize an object to a node instance.
  * 
- * @param {GoSgf.GameTree.Node} node - An object
+ * @param {object} obj - An object
  * @param {object} [options] - Options to modify normalization behaviour
  * @param {boolean} options.keepRaw - Whether to keep `_raw` property on nodes
  *
@@ -113,6 +136,24 @@ function normalizeNode(obj, options) {
   if (!options.keepRaw) delete node._raw;
 
   return node;
+}
+
+/**
+ * Normalize a NodeInfo object
+ *
+ * @param {object} obj - An object representing a NodeInfo object
+ * @param {object} [options] - Options to modify normalization behaviour
+ * @param {boolean} options.keepRaw - Whether to keep `_raw` property on nodes
+ *
+ * @return {GoSgf.Nav~NodeInfo} A newly created Node instance.
+ *
+ * @alias Tests.normalize.nodeinfo
+ */
+function normalizeNodeInfo(obj, options) {
+  var o = {};
+  if (obj.path) o.path = obj.path;
+  if (obj.node) o.node = normalizeNode(obj.node, options || {});
+  return o;
 }
 
 /**
