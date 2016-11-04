@@ -1,0 +1,119 @@
+{ "suite": "Nav edit API",
+  "handler": "nav",
+  "it": "should {should}",
+  "cases": [
+    { "group": "#_addNode", "merge": {
+      "method": "_addNode",
+      "arguments": [ true ]
+    } },
+
+    { "should": "add a node after the last node",
+      "options": { "sgf": "(;;)" },
+      "updateBefore": [1],
+      "return": {
+        "path": [2],
+        "node": {}
+      },
+      "normalize": "nodeinfo",
+      "path": [2],
+      "node": {},
+      "gametree": {
+        "nodes": [ {}, {}, {} ]
+      }
+    },
+    { "should": "create variations of the last node",
+      "options": { "sgf": "(;;;C[])" },
+      "updateBefore": [1],
+      "return": {
+        "path": [1, 0],
+        "node": {}
+      },
+      "normalize": "nodeinfo",
+      "path": [1, 0],
+      "node": {},
+      "gametree": {
+        "nodes": [ {}, {} ],
+        "variations": [ {
+          "nodes": [ { "C": "" } ]
+        }, {
+          "nodes": [ {} ]
+        } ]
+      }
+    },
+    { "should": "add a variation after the node",
+      "options": { "sgf": "(;;(;C[a])(;C[b]))" },
+      "updateBefore": [1],
+      "return": {
+        "path": [2, 0],
+        "node": {}
+      },
+      "normalize": "nodeinfo",
+      "path": [2, 0],
+      "node": {},
+      "gametree": {
+        "nodes": [ {}, {} ],
+        "variations": [ {
+          "nodes": [ { "C": "a" } ]
+        }, {
+          "nodes": [ { "C": "b" } ]
+        }, {
+          "nodes": [ {} ]
+        } ]
+      }
+    },
+
+
+    { "group": "#cut", "merge": {
+      "method": "cut"
+    } },
+
+    { "should": "cut from a node",
+      "options": { "sgf": "(;;;(;)(;))" },
+      "updateBefore": [1],
+      "return": {
+        "nodes": [ {}, {} ],
+        "variations": [
+          { "nodes": [ {} ] },
+          { "nodes": [ {} ] }
+        ]
+      },
+      "normalize": "gametree",
+      "path": [0],
+      "gametree": {
+        "nodes": [ {} ]
+      }
+    },
+    { "should": "cut a variation",
+      "options": { "sgf": "(;;(;)(;)(;))" },
+      "updateBefore": [0, 0],
+      "return": {
+        "nodes": [ {} ]
+      },
+      "normalize": "gametree",
+      "path": [1],
+      "gametree": {
+        "nodes": [ {}, {} ],
+        "variations": [
+          { "nodes": [ {} ] },
+          { "nodes": [ {} ] }
+        ]
+      }
+    },
+    { "should": "cut a variation and merge remaining one",
+      "options": { "sgf": "(;;(;)(;(;)(;)))" },
+      "updateBefore": [0, 0],
+      "return": {
+        "nodes": [ {} ]
+      },
+      "normalize": "gametree",
+      "path": [1],
+      "gametree": {
+        "nodes": [ {}, {}, {} ],
+        "variations": [
+          { "nodes": [ {} ] },
+          { "nodes": [ {} ] }
+        ]
+      }
+    }
+  ]
+}

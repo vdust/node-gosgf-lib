@@ -17,3 +17,7 @@ describe('Sgf navigation and board view:', function () {
   build(__dirname + '/suites/nav.json');
   build(__dirname + '/suites/board.json');
 });
+
+describe('Sgf edition:', function () {
+  build(__dirname + '/suites/navedit.json');
+});
