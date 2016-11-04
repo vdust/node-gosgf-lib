@@ -33,6 +33,9 @@ function navTest(usecase, options) {
   if (usecase.node) {
     node = normalize.node(usecase.node, options);
   }
+  if (usecase.gametree) {
+    usecase.gametree = normalize.gametree(usecase.gametree, options)[0];
+  }
   if (!options.sgf) throw new Error("Missing options.sgf");
 
   return () => {
@@ -54,6 +57,7 @@ function navTest(usecase, options) {
       expect(ret).toEqual(expRet);
     }
     if (usecase.path) expect(nav.path).toEqual(usecase.path);
+    if (usecase.gametree) expect(nav._gametree).toEqual(usecase.gametree);
     if (node) expect(nav.get()).toEqual(node);
   };
 }
