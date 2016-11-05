@@ -29,14 +29,22 @@ var normalize = require('./_normalize.js');
  * @param {string} options.sgf - A single-gametree SGF string to load
  */
 function navTest(usecase, options) {
-  var node;
+  var node, gametree, args, i;
+
+  if (!options.sgf) throw new Error("Missing options.sgf");
+
   if (usecase.node) {
     node = normalize.node(usecase.node, options);
   }
+
   if (usecase.gametree) {
-    usecase.gametree = normalize.gametree(usecase.gametree, options)[0];
+    gametree = normalize.gametree(usecase.gametree, options)[0];
   }
-  if (!options.sgf) throw new Error("Missing options.sgf");
+
+  args = (usecase['arguments'] || []).map(function (v, i) {
+    if (!usecase.normalizeArguments || !(i in usecase.normalizeArguments)) return v;
+    return normalize[usecase.normalizeArguments[i]](v, options);
+  });
 
   return () => {
     var gosgf = new GoSgf(options.sgf, options.keepRaw),
@@ -48,7 +56,7 @@ function navTest(usecase, options) {
 
     if (usecase.updateBefore) nav.update(usecase.updateBefore);
 
-    ret = nav[usecase.method].apply(nav, usecase['arguments'] || []);
+    ret = nav[usecase.method].apply(nav, args);
 
     if (expRet) {
       if (usecase.normalize) {
@@ -57,7 +65,7 @@ function navTest(usecase, options) {
       expect(ret).toEqual(expRet);
     }
     if (usecase.path) expect(nav.path).toEqual(usecase.path);
-    if (usecase.gametree) expect(nav._gametree).toEqual(usecase.gametree);
+    if (gametree) expect(nav._gametree).toEqual(gametree);
     if (node) expect(nav.get()).toEqual(node);
   };
 }
