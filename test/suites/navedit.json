@@ -114,6 +114,93 @@
           { "nodes": [ {} ] }
         ]
       }
+    },
+
+    { "group": "#insert", "merge": {
+      "method": "insert"
+    } },
+
+    { "should": "insert a gametree after a leaf node",
+      "options": { "sgf": "(;C[a];C[b])" },
+      "arguments": [ {
+        "nodes": [ {"C":"i"} ],
+        "variations": [
+          { "nodes": [ {} ] },
+          { "nodes": [ {} ] }
+        ]
+      } ],
+      "normalizeArguments": [
+        "gametree"
+      ],
+      "updateBefore": [1],
+      "return": [2],
+      "gametree": {
+        "nodes": [ {"C":"a"}, {"C":"b"}, {"C":"i"} ],
+        "variations": [
+          { "nodes": [ {} ] },
+          { "nodes": [ {} ] }
+        ]
+      }
+    },
+    { "should": "insert a gametree as a variation after a non-leaf node",
+      "options": { "sgf": "(;C[a];C[b];C[c](;C[d])(;C[e]))" },
+      "arguments": [ {
+        "nodes": [ {"C":"i"} ],
+        "variations": [
+          { "nodes": [ {} ] },
+          { "nodes": [ {} ] }
+        ]
+      } ],
+      "normalizeArguments": [
+        "gametree"
+      ],
+      "updateBefore": [1],
+      "return": [1, 0],
+      "gametree": {
+        "nodes": [ {"C":"a"}, {"C":"b"} ],
+        "variations": [
+          { "nodes": [ {"C":"c"} ],
+            "variations": [
+              { "nodes": [ {"C":"d"} ] },
+              { "nodes": [ {"C":"e"} ] }
+            ]
+          },
+          { "nodes": [ {"C":"i"} ],
+            "variations": [
+              { "nodes": [ {} ] },
+              { "nodes": [ {} ] }
+            ]
+          }
+        ]
+      }
+    },
+    { "should": "insert a gametree as a new variation of existing ones",
+      "options": { "sgf": "(;C[a];C[b](;C[c])(;C[d]))" },
+      "arguments": [ {
+        "nodes": [ {"C":"i"} ],
+        "variations": [
+          { "nodes": [ {} ] },
+          { "nodes": [ {} ] }
+        ]
+      } ],
+      "normalizeArguments": [
+        "gametree"
+      ],
+      "updateBefore": [1],
+      "return": [2, 0],
+      "gametree": {
+        "nodes": [ {"C":"a"}, {"C":"b"} ],
+        "variations": [
+          { "nodes": [ {"C":"c"} ] },
+          { "nodes": [ {"C":"d"} ] },
+          { "nodes": [ {"C":"i"} ],
+            "variations": [
+              { "nodes": [ {} ] },
+              { "nodes": [ {} ] }
+            ]
+          }
+        ]
+      }
     }
   ]
 }
