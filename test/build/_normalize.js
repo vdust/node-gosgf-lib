@@ -129,7 +129,10 @@ function normalizeNode(obj, options) {
   node = new (GoSgf.GameTree.Node)();
 
   for (var k in obj) {
-    if (k === '_raw') continue;
+    if (k === '_raw') {
+      node[k] = obj[k];
+      continue;
+    }
     node[k] = normalizeValue(obj[k], Object.assign({ key: k }, options || {}));
   }
 

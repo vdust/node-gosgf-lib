@@ -1,6 +1,11 @@
 { "suite": "Tree",
   "handler": "sgf",
   "it": "should parse: {label}",
+  "options": {
+    "normalize": {
+      "collection": "gametrees"
+    }
+  },
   "cases": [
     { "label": "Minimal game tree",
       "sgf": "(;)",

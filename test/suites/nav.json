@@ -1,8 +1,16 @@
 { "suite": "Nav",
   "handler": "nav",
   "it": "should {should}",
+  "merge": {
+    "sgf": "(;SZ[5]GM[1]EV[Test];B[aa];W[ab];B[ba];W[bb](;B[dd](;W[ca])(;W[cc])(;W[dd]))(;B[ca];W[cb];B[ee];W[da]))",
+    "context": "nav",
+    "nav": [ 0 ]
+  },
   "options": {
-    "sgf": "(;SZ[5]GM[1]EV[Test];B[aa];W[ab];B[ba];W[bb](;B[dd](;W[ca])(;W[cc])(;W[dd]))(;B[ca];W[cb];B[ee];W[da]))"
+    "normalize": {
+      "node": "node",
+      "gametree": "gametree"
+    }
   },
   "cases": [
     { "group": "#moveTo()", "merge": {
@@ -165,10 +173,16 @@
       }
     },
 
-    { "group": "#getNodes()", "merge": {
-      "method": "getNodes",
-      "normalize": "nodes"
-    } },
+    { "group": "#getNodes()",
+      "merge": {
+        "method": "getNodes"
+      },
+      "options": {
+        "normalize": {
+          "return": "nodes"
+        }
+      }
+    },
 
     { "should": "get nodes from root to cursor path",
       "updateBefore": [ 0, 1, 0 ],

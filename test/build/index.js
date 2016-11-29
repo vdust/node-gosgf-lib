@@ -7,6 +7,39 @@
 
 var fs = require('fs');
 
+var expect = require('expect');
+
+var GoSgf = require('../../lib/gosgf.js');
+
+var normalize = require('./_normalize');
+
+// Deep merging of plain objects
+function merge(src) {
+  var k, o;
+
+  if (typeof src !== 'object' || Array.isArray(src)) return src;
+
+  for (var i = 1; i < arguments.length; i++) {
+    o = arguments[i];
+
+    if (typeof o !== 'object' || Array.isArray(o)) continue;
+
+    for (k in o) {
+      if (!o.hasOwnProperty(k)) continue;
+      if (typeof o[k] !== 'object' || Array.isArray(o[k])) {
+        src[k] = o[k];
+      } else {
+        if (typeof src[k] !== 'object' || Array.isArray(src[k])) {
+          src[k] = {};
+        }
+        merge(src[k], o[k]);
+      }
+    }
+  }
+
+  return src;
+};
+
 function subst(fmt, substs) {
   return fmt.replace(/\{([\{\}]|[^\}]+)\}/g, function (m, g1) {
     if (g1 === '{' || g1 === '}') return g1;
@@ -50,22 +83,24 @@ function buildSuite(filename) {
 
   describe(data.suite, function () {
     var i = 0,
-      merge, group;
+      suiteMerge = data.merge || {},
+      _merge, group, opts = data.options || {};
 
     while (i < data.cases.length) {
       group = data.cases[i].group;
       if (group) {
         group = data.groupFormat ? subst(data.groupFormat, data.cases[i]) : group;
-        merge = data.cases[i].merge || {};
+        _merge = data.cases[i].merge || {};
+        opts = merge({}, data.options || {}, data.cases[i].options || {});
         describe(group, function () {
           i++;
           while (i < data.cases.length && !data.cases[i].group) {
-            buildTest(data.handler, Object.assign({}, merge, data.cases[i]), data.it, data.options);
+            buildTest(data.handler, Object.assign({}, suiteMerge, _merge, data.cases[i]), data.it, opts);
             i++;
           }
         });
       } else {
-        buildTest(data.handler, data.cases[i], data.it, data.options);
+        buildTest(data.handler, Object.assign({}, suiteMerge, data.cases[i]), data.it, opts);
         i++;
       }
     }
@@ -99,10 +134,66 @@ module.exports = buildSuite;
  * @param {object} globalOptions - suite options extended by `usecase.options`
  */
 function buildTest(handler, usecase, descFmt, suiteOptions) {
-  var options = Object.assign({}, suiteOptions || {}, usecase.options || {});
+  var options = merge({}, suiteOptions || {}, usecase.options || {});
   var desc = subst(descFmt, usecase);
+  var handle = buildSuite.HANDLERS[handler];
+  var normTarget;
+  var runFunc;
+
   try {
-    it(desc, buildSuite.HANDLERS[handler](usecase, options));
+    // Normalization map
+    if (options.normalize) {
+      for (var k in options.normalize) {
+        normTarget = options.normalize[k];
+        if (k in usecase) {
+          if (Array.isArray(normTarget)) {
+            usecase[k] = (usecase[k] || []).map(function (v, i) {
+              if (!(i in normTarget)) return v;
+              return normalize[normTarget[i]](v, options);
+            });
+          } else {
+            usecase[k] = normalize[normTarget](usecase[k], options);
+          }
+        }
+      }
+    }
+
+    if (handle.preTest) {
+      handle.preTest(usecase, options);
+    }
+    runFunc = handle(usecase, options);
+
+    it(desc, () => {
+      var objects = {},
+        ctx, ret;
+
+      if (usecase.sgf) {
+        objects.gosgf = new GoSgf(usecase.sgf, options.keepRaw);
+        if (usecase.nav) {
+          objects.nav = objects.gosgf.nav.apply(objects.gosgf, usecase.nav);
+          if (usecase.board) {
+            objects.board = objects.nav.board;
+          }
+        }
+      }
+
+      if (runFunc.pre) runFunc.pre(objects);
+
+      if (usecase.method) {
+        ctx = objects[usecase.context];
+        ret = ctx[usecase.method].apply(ctx, usecase['arguments']);
+        if (usecase['return']) {
+          expect(ret).toEqual(usecase['return']);
+        }
+        objects.methodReturn = ret;
+      }
+
+      if (typeof runFunc === 'function') {
+        runFunc(objects);
+      }
+
+      if (runFunc.post) runFunc.post(objects);
+    });
   } catch (e) {
     console.log("%s: %s", desc, e);
   }

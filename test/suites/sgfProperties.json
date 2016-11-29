@@ -2,6 +2,11 @@
   "handler": "sgf",
   "it": "should decode property: {label}",
   "groupFormat": "[{group}]",
+  "options": {
+    "normalize": {
+      "collection": "gametrees"
+    }
+  },
   "cases": [
     { "group": "Move properties" },
 

@@ -7,41 +7,29 @@
 
 var expect = require('expect');
 
-var GoSgf = require('../../lib/gosgf.js');
-var normalize = require('./_normalize.js');
-
 /**
  * `board` handler.
  *
- * Build tests for {@link GoSgf.Board} states
- *
- * @param {object} usecase - Case data
- * @param {string} usecase.method - Method's name
+ * @alias Test.HANDLERS.board
  */
 function boardTest(usecase, options) {
-  var board;
-
-  if (!options.sgf) throw new Error("Missing options.sgf");
-
-  if (usecase.board) board = normalize.board(usecase.board);
-
-  return () => {
-    var gosgf = new GoSgf(options.sgf, options.keepRaw),
-      nav = gosgf.nav(0);
-
-    if (usecase.path) {
-      expect(nav.update(usecase.path)).toBe(true);
-    }
-
-    expect(nav.board).toBeA(GoSgf.Board);
-
-    if (board) {
-      expect(nav.board.board).toEqual(board);
-    }
-    if (usecase.infos) expect(nav.board.infos).toEqual(usecase.infos);
-    if (usecase.capturedBy) expect(nav.board.capturedBy()).toEqual(usecase.capturedBy);
-    if (usecase.nextPlayer) expect(nav.board.nextPlayer).toEqual(usecase.nextPlayer);
+  function func(objects) {
+    var board = objects.board;
+    (['board', 'infos', 'nextPlayer', 'capturedBy']).forEach((k) => {
+      if (!usecase[k]) return;
+      if (typeof board[k] === 'function') {
+        expect(board[k]()).toEqual(usecase[k])
+      } else {
+        expect(board[k]).toEqual(usecase[k]);
+      }
+    });
   };
+
+  func.pre = function (objects) {
+    if (usecase.path) expect(objects.nav.update(usecase.path)).toBe(true);
+  };
+
+  return func;
 }
 
 module.exports = boardTest;

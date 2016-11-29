@@ -1,20 +1,37 @@
 { "suite": "Nav edit API",
   "handler": "nav",
   "it": "should {should}",
+  "options": {
+    "normalize": {
+      "gametree": "gametree",
+      "node": "node"
+    }
+  },
+  "merge": {
+    "context": "nav",
+    "nav": [ 0 ],
+    "board": true
+  },
   "cases": [
-    { "group": "#_addNode", "merge": {
-      "method": "_addNode",
-      "arguments": [ true ]
-    } },
+    { "group": "#_addNode",
+      "merge": {
+        "method": "_addNode",
+        "arguments": [ true ]
+      },
+      "options": {
+        "normalize": {
+          "return": "nodeinfo"
+        }
+      }
+    },
 
     { "should": "add a node after the last node",
-      "options": { "sgf": "(;;)" },
+      "sgf": "(;;)",
       "updateBefore": [1],
       "return": {
         "path": [2],
         "node": {}
       },
-      "normalize": "nodeinfo",
       "path": [2],
       "node": {},
       "gametree": {
@@ -22,13 +39,12 @@
       }
     },
     { "should": "create variations of the last node",
-      "options": { "sgf": "(;;;C[])" },
+      "sgf": "(;;;C[])",
       "updateBefore": [1],
       "return": {
         "path": [1, 0],
         "node": {}
       },
-      "normalize": "nodeinfo",
       "path": [1, 0],
       "node": {},
       "gametree": {
@@ -41,13 +57,12 @@
       }
     },
     { "should": "add a variation after the node",
-      "options": { "sgf": "(;;(;C[a])(;C[b]))" },
+      "sgf": "(;;(;C[a])(;C[b]))",
       "updateBefore": [1],
       "return": {
         "path": [2, 0],
         "node": {}
       },
-      "normalize": "nodeinfo",
       "path": [2, 0],
       "node": {},
       "gametree": {
@@ -63,12 +78,19 @@
     },
 
 
-    { "group": "#cut", "merge": {
-      "method": "cut"
-    } },
+    { "group": "#cut",
+      "merge": {
+        "method": "cut"
+      },
+      "options": {
+        "normalize": {
+          "return": "gametree"
+        }
+      }
+    },
 
     { "should": "cut from a node",
-      "options": { "sgf": "(;;;(;)(;))" },
+      "sgf": "(;;;(;)(;))",
       "updateBefore": [1],
       "return": {
         "nodes": [ {}, {} ],
@@ -77,19 +99,17 @@
           { "nodes": [ {} ] }
         ]
       },
-      "normalize": "gametree",
       "path": [0],
       "gametree": {
         "nodes": [ {} ]
       }
     },
     { "should": "cut a variation",
-      "options": { "sgf": "(;;(;)(;)(;))" },
+      "sgf": "(;;(;)(;)(;))",
       "updateBefore": [0, 0],
       "return": {
         "nodes": [ {} ]
       },
-      "normalize": "gametree",
       "path": [1],
       "gametree": {
         "nodes": [ {}, {} ],
@@ -100,12 +120,11 @@
       }
     },
     { "should": "cut a variation and merge remaining one",
-      "options": { "sgf": "(;;(;)(;(;)(;)))" },
+      "sgf": "(;;(;)(;(;)(;)))",
       "updateBefore": [0, 0],
       "return": {
         "nodes": [ {} ]
       },
-      "normalize": "gametree",
       "path": [1],
       "gametree": {
         "nodes": [ {}, {}, {} ],
@@ -116,12 +135,19 @@
       }
     },
 
-    { "group": "#insert", "merge": {
-      "method": "insert"
-    } },
+    { "group": "#insert",
+      "merge": {
+        "method": "insert"
+      },
+      "options": {
+        "normalize": {
+          "arguments": [ "gametree" ]
+        }
+      }
+    },
 
     { "should": "insert a gametree after a leaf node",
-      "options": { "sgf": "(;C[a];C[b])" },
+      "sgf": "(;C[a];C[b])",
       "arguments": [ {
         "nodes": [ {"C":"i"} ],
         "variations": [
@@ -129,9 +155,6 @@
           { "nodes": [ {} ] }
         ]
       } ],
-      "normalizeArguments": [
-        "gametree"
-      ],
       "updateBefore": [1],
       "return": [2],
       "gametree": {
@@ -143,7 +166,7 @@
       }
     },
     { "should": "insert a gametree as a variation after a non-leaf node",
-      "options": { "sgf": "(;C[a];C[b];C[c](;C[d])(;C[e]))" },
+      "sgf": "(;C[a];C[b];C[c](;C[d])(;C[e]))",
       "arguments": [ {
         "nodes": [ {"C":"i"} ],
         "variations": [
@@ -151,9 +174,6 @@
           { "nodes": [ {} ] }
         ]
       } ],
-      "normalizeArguments": [
-        "gametree"
-      ],
       "updateBefore": [1],
       "return": [1, 0],
       "gametree": {
@@ -175,7 +195,7 @@
       }
     },
     { "should": "insert a gametree as a new variation of existing ones",
-      "options": { "sgf": "(;C[a];C[b](;C[c])(;C[d]))" },
+      "sgf": "(;C[a];C[b](;C[c])(;C[d]))",
       "arguments": [ {
         "nodes": [ {"C":"i"} ],
         "variations": [
@@ -183,9 +203,6 @@
           { "nodes": [ {} ] }
         ]
       } ],
-      "normalizeArguments": [
-        "gametree"
-      ],
       "updateBefore": [1],
       "return": [2, 0],
       "gametree": {

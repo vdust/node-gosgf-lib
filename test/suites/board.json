@@ -1,8 +1,16 @@
 { "suite": "Board",
   "handler": "board",
   "it": "should {should}",
+  "merge": {
+    "sgf": "(;SZ[5]GM[1]EV[Test];B[aa];W[ab];B[ba];W[bb](;B[dd](;W[ca])(;W[cc])(;W[dd]))(;AB[ca][ee]AW[cb][ad:cd]PL[W])(;B[cc]TR[aa:ba]SQ[ab:bb][dd]CR[cc]))",
+    "context": "board",
+    "nav": [ 0 ],
+    "board": true
+  },
   "options": {
-    "sgf": "(;SZ[5]GM[1]EV[Test];B[aa];W[ab];B[ba];W[bb](;B[dd](;W[ca])(;W[cc])(;W[dd]))(;AB[ca][ee]AW[cb][ad:cd]PL[W])(;B[cc]TR[aa:ba]SQ[ab:bb][dd]CR[cc]))"
+    "normalize": {
+      "board": "board"
+    }
   },
   "cases": [
     { "should": "setup an empty board",
