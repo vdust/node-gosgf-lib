@@ -2,7 +2,6 @@
   "handler": "board",
   "it": "should {should}",
   "merge": {
-    "sgf": "(;SZ[5]GM[1]EV[Test];B[aa];W[ab];B[ba];W[bb](;B[dd](;W[ca])(;W[cc])(;W[dd]))(;AB[ca][ee]AW[cb][ad:cd]PL[W])(;B[cc]TR[aa:ba]SQ[ab:bb][dd]CR[cc]))",
     "context": "board",
     "nav": [ 0 ],
     "board": true
@@ -13,6 +12,12 @@
     }
   },
   "cases": [
+    { "group": "Board position",
+      "merge": {
+        "sgf": "(;SZ[5]GM[1]EV[Test];B[aa];W[ab];B[ba];W[bb](;B[dd](;W[ca])(;W[cc])(;W[dd]))(;AB[ca][ee]AW[cb][ad:cd]PL[W])(;B[cc]TR[aa:ba]SQ[ab:bb][dd]CR[cc]))"
+      }
+    },
+
     { "should": "setup an empty board",
       "path": [ 0 ],
       "board": [
@@ -218,6 +223,34 @@
         "white": 0
       },
       "nextPlayer": 2
+    },
+
+    { "group": "#groupHasLiberties()",
+      "merge": {
+        "sgf": "(;SZ[5](;AB[cc])(;AB[aa:ba]AW[ab:cb])(;AB[aa:ba]AW[ab:cb][ca])(;AB[cc]AW[cb][bc][dc][cd]))",
+        "method": "groupHasLiberties"
+      }
+    },
+
+    { "should": "return true with isolated single stone group",
+      "path": [0, 0],
+      "arguments": [ { "x": 2, "y": 2 } ],
+      "return": true
+    },
+    { "should": "return true with single liberty group",
+      "path": [1, 0],
+      "arguments": [ { "x": 0, "y": 0 } ],
+      "return": true
+    },
+    { "should": "return false with liberty-less group",
+      "path": [2, 0],
+      "arguments": [ { "x": 0, "y": 0 } ],
+      "return": false
+    },
+    { "should": "return true with liberty-less single stone",
+      "path": [3, 0],
+      "arguments": [ { "x": 2, "y": 2 } ],
+      "return": false
     }
   ]
 }

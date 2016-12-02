@@ -16,7 +16,7 @@ function boardTest(usecase, options) {
   function func(objects) {
     var board = objects.board;
     (['board', 'infos', 'nextPlayer', 'capturedBy']).forEach((k) => {
-      if (!usecase[k]) return;
+      if (!usecase[k] || usecase[k] === true) return;
       if (typeof board[k] === 'function') {
         expect(board[k]()).toEqual(usecase[k])
       } else {
