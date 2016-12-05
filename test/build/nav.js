@@ -15,9 +15,11 @@ var expect = require('expect');
 function navTest(usecase, options) {
   var func = (objects) => {
     var nav = objects.nav;
+    var board = objects.board;
     if (usecase.path) expect(nav.path).toEqual(usecase.path);
     if (usecase.gametree) expect(nav._gametree).toEqual(usecase.gametree);
     if (usecase.node) expect(nav.get()).toEqual(usecase.node);
+    if (typeof usecase.board === 'object') expect(board.board).toEqual(usecase.board);
   };
 
   func.pre = function (objects) {
