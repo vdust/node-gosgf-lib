@@ -148,7 +148,7 @@ function buildTest(handler, usecase, descFmt, suiteOptions) {
         if (k in usecase) {
           if (Array.isArray(normTarget)) {
             usecase[k] = (usecase[k] || []).map(function (v, i) {
-              if (!(i in normTarget)) return v;
+              if (!(i in normTarget) || !normTarget[i]) return v;
               return normalize[normTarget[i]](v, options);
             });
           } else {
