@@ -4,7 +4,8 @@
   "options": {
     "normalize": {
       "gametree": "gametree",
-      "node": "node"
+      "node": "node",
+      "board": "board"
     }
   },
   "merge": {
@@ -218,6 +219,334 @@
           }
         ]
       }
+    },
+
+    { "group": "#nodeType",
+      "merge": {
+        "method": "nodeType",
+        "sgf": "(;SZ[5];B[aa];AW[ab:cb])"
+      }
+    },
+
+    { "should": "get node type 'root'",
+      "arguments": [ [ 0 ] ],
+      "return": "root"
+    },
+    { "should": "get node type 'move'",
+      "arguments": [ [ 1 ] ],
+      "return": "move"
+    },
+    { "should": "get node type 'setup'",
+      "arguments": [ [ 2 ] ],
+      "return": "setup"
+    },
+
+    { "group": "#play",
+      "merge": {
+        "method": "play"
+      },
+      "options": {
+        "normalize": {
+          "arguments": [ "value" ]
+        }
+      }
+    },
+
+    { "should": "play a black stone",
+      "sgf": "(;SZ[3])",
+      "arguments": [ { "x": 0, "y": 0 } ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] },
+          { "B": { "x": 0, "y": 0 } }
+        ]
+      },
+      "board": [
+        { "color": 1, "mark": { "last": true } },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "play a white stone",
+      "sgf": "(;SZ[3];B[ab])",
+      "updateBefore": [ 1 ],
+      "arguments": [ { "x": 0, "y": 0 } ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] },
+          { "B": { "x": 0, "y": 1 } },
+          { "W": { "x": 0, "y": 0 } }
+        ]
+      },
+      "board": [
+        { "color": 2, "mark": { "last": true } },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 1 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "play black stone with capture",
+      "sgf": "(;SZ[3]AW[aa][ca][bb]AB[ab])",
+      "arguments": [ { "x": 1, "y": 0 } ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "AW": [
+              { "x": 0, "y": 0 },
+              { "x": 2, "y": 0 },
+              { "x": 1, "y": 1 }
+            ],
+            "AB": [ { "x": 0, "y": 1 } ]
+          },
+          { "B": { "x": 1, "y": 0 } }
+        ]
+      },
+      "board": [
+        { "color": 0 },
+        { "color": 1, "mark": { "last": true } },
+        { "color": 2 },
+
+        { "color": 1 },
+        { "color": 2 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "prevent illegal move from being played",
+      "sgf": "(;SZ[3]AW[ba][ab])",
+      "arguments": [ { "x": 0, "y": 0 } ],
+      "return": false,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "AW": [
+              { "x": 1, "y": 0 },
+              { "x": 0, "y": 1 }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 0 },
+        { "color": 2 },
+        { "color": 0 },
+
+        { "color": 2 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+
+    { "group": "#toggle",
+      "merge": {
+        "method": "toggle"
+      },
+      "options": {
+        "normalize": {
+          "arguments": [ null, "value" ]
+        }
+      }
+    },
+
+    { "should": "setup black stones on root node",
+      "sgf": "(;SZ[3])",
+      "arguments": [
+        1,
+        [
+          { "x": 0, "y": 0 },
+          { "x": 1, "y": 1 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "AB": [
+              { "x": 0, "y": 0 },
+              { "x": 1, "y": 1 }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 1 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 1 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "setup white stones on root node",
+      "sgf": "(;SZ[3])",
+      "arguments": [
+        2,
+        [
+          { "x": 0, "y": 0 },
+          { "x": 1, "y": 1 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "AW": [
+              { "x": 0, "y": 0 },
+              { "x": 1, "y": 1 }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 2 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 2 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "toggle existing stones on root node",
+      "sgf": "(;SZ[3]AB[aa:ca])",
+      "arguments": [
+        1,
+        [
+          { "x": 0, "y": 0 },
+          { "x": 1, "y": 1 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "AB": [
+              { "x": 1, "y": 0 },
+              { "x": 2, "y": 0 },
+              { "x": 1, "y": 1 }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 0 },
+        { "color": 1 },
+        { "color": 1 },
+
+        { "color": 0 },
+        { "color": 1 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "update stones on a new setup node",
+      "sgf": "(;SZ[3];B[aa];W[ba])",
+      "updateBefore": [ 2 ],
+      "arguments": [
+        1,
+        [
+          { "x": 0, "y": 0 },
+          { "x": 1, "y": 1 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] },
+          { "B": { "x": 0, "y": 0 } },
+          { "W": { "x": 1, "y": 0 } },
+          { "AE": [ { "x": 0, "y": 0 } ],
+            "AB": [ { "x": 1, "y": 1 } ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 0 },
+        { "color": 2 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 1 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "force override of existing stones",
+      "sgf": "(;SZ[3];B[aa];W[ba];AW[ca])",
+      "updateBefore": [ 3 ],
+      "arguments": [
+        1,
+        [
+          { "x": 1, "y": 0 },
+          { "x": 2, "y": 0 }
+        ],
+        true
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] },
+          { "B": { "x": 0, "y": 0 } },
+          { "W": { "x": 1, "y": 0 } },
+          { "AB": [
+            { "x": 1, "y": 0 },
+            { "x": 2, "y": 0 } ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 1 },
+        { "color": 1 },
+        { "color": 1 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
     }
   ]
 }
