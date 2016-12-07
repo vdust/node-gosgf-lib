@@ -547,6 +547,262 @@
         { "color": 0 },
         { "color": 0 }
       ]
+    },
+
+    { "group": "#marks",
+      "merge": {
+        "method": "marks"
+      },
+      "options": {
+        "normalize": {
+          "arguments": [ null, "value" ]
+        }
+      }
+    },
+
+    { "should": "Set circle mark on root node",
+      "sgf": "(;SZ[3])",
+      "arguments": [
+        "circle",
+        [
+          { "x": 0, "y": 1 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "CR": [
+              { "x": 0, "y": 1 }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0, "mark": { "type": "circle" } },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "Toggle circle marks",
+      "sgf": "(;SZ[3]CR[aa])",
+      "arguments": [
+        "circle",
+        [
+          { "x": 0, "y": 0 },
+          { "x": 0, "y": 1 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "CR": [
+              { "x": 0, "y": 1 }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0, "mark": { "type": "circle" } },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "Replace non-circle marks with circles",
+      "sgf": "(;SZ[3]SQ[aa])",
+      "arguments": [
+        "circle",
+        [
+          { "x": 0, "y": 0 },
+          { "x": 0, "y": 1 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "CR": [
+              { "x": 0, "y": 0 },
+              { "x": 0, "y": 1 }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 0, "mark": { "type": "circle" } },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0, "mark": { "type": "circle" } },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "Set, toggle or replace marks",
+      "sgf": "(;SZ[3]CR[ba]MA[ca]SL[ab]SQ[bb]TR[cb])",
+      "arguments": [
+        "circle",
+        [
+          { "x": 0, "y": 0 },
+          { "x": 1, "y": 0 },
+          { "x": 2, "y": 0 },
+          { "x": 0, "y": 1 },
+          { "x": 1, "y": 1 },
+          { "x": 2, "y": 1 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "CR": [
+              { "x": 0, "y": 0 },
+              { "x": 2, "y": 0 },
+              { "x": 0, "y": 1 },
+              { "x": 1, "y": 1 },
+              { "x": 2, "y": 1 }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 0, "mark": { "type": "circle" } },
+        { "color": 0 },
+        { "color": 0, "mark": { "type": "circle" } },
+
+        { "color": 0, "mark": { "type": "circle" } },
+        { "color": 0, "mark": { "type": "circle" } },
+        { "color": 0, "mark": { "type": "circle" } },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "Set or toggle dimmed status (preserve other marks)",
+      "sgf": "(;SZ[3]LB[ba:A]CR[ca]DD[ab])",
+      "arguments": [
+        "dimmed",
+        [
+          { "x": 0, "y": 0 },
+          { "x": 1, "y": 0 },
+          { "x": 2, "y": 0 },
+          { "x": 0, "y": 1 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "CR": [ { "x": 2, "y": 0 } ],
+            "DD": [
+              { "x": 0, "y": 0 },
+              { "x": 1, "y": 0 },
+              { "x": 2, "y": 0 }
+            ],
+            "LB": [
+              { "first": { "x": 1, "y": 0 }, "second": "A" }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 0, "mark": { "dimmed": true } },
+        { "color": 0, "mark": { "label": "A", "dimmed": true } },
+        { "color": 0, "mark": { "type": "circle", "dimmed": true } },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "Set or replace labels (preserve other marks)",
+      "sgf": "(;SZ[3]LB[ba:A]CR[ca]DD[ab])",
+      "arguments": [
+        "label",
+        [
+          { "first": { "x": 0, "y": 0 }, "second": "X" },
+          { "first": { "x": 1, "y": 0 }, "second": "Y" },
+          { "first": { "x": 2, "y": 0 }, "second": "Z" },
+          { "first": { "x": 0, "y": 1 }, "second": "T" }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "CR": [ { "x": 2, "y": 0 } ],
+            "DD": [ { "x": 0, "y": 1 } ],
+            "LB": [
+              { "first": { "x": 0, "y": 0 }, "second": "X" },
+              { "first": { "x": 1, "y": 0 }, "second": "Y" },
+              { "first": { "x": 2, "y": 0 }, "second": "Z" },
+              { "first": { "x": 0, "y": 1 }, "second": "T" }
+            ]
+          }
+        ]
+      },
+      "board": [
+        { "color": 0, "mark": { "label": "X" } },
+        { "color": 0, "mark": { "label": "Y" } },
+        { "color": 0, "mark": { "type": "circle", "label": "Z" } },
+
+        { "color": 0, "mark": { "dimmed": true, "label": "T" } },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "Clear all marks",
+      "sgf": "(;SZ[3]LB[cc:A]DD[ac]CR[ba]MA[ca]SL[ab]SQ[bb]TR[cb])",
+      "arguments": [ null ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] }
+        ]
+      },
+      "board": [
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
     }
   ]
 }
