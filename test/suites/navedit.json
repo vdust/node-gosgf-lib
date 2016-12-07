@@ -362,9 +362,9 @@
       ]
     },
 
-    { "group": "#toggle",
+    { "group": "#stones",
       "merge": {
-        "method": "toggle"
+        "method": "stones"
       },
       "options": {
         "normalize": {
