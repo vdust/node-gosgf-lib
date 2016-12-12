@@ -803,6 +803,61 @@
         { "color": 0 },
         { "color": 0 }
       ]
+    },
+
+    { "group": "#infos",
+      "merge": {
+        "method": "infos"
+      }
+    },
+    { "should": "Set a single info property",
+      "sgf": "(;SZ[3])",
+      "arguments": [ "gamecomment", "Foo" ],
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "GC": "Foo"
+          }
+        ]
+      }
+    },
+    { "should": "Delete a single info property",
+      "sgf": "(;SZ[3]GC[Foo])",
+      "arguments": [ "gamecomment" ],
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] }
+        ]
+      }
+    },
+    { "should": "Set multiple properties at once",
+      "sgf": "(;SZ[3])",
+      "arguments": [ {
+        "gamecomment": "Foo",
+        "annotator": "Bar"
+      } ],
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ],
+            "GC": "Foo",
+            "AN": "Bar"
+          }
+        ]
+      }
+    },
+    { "should": "Delete multiple properties",
+      "sgf": "(;SZ[3];GC[Foo]AN[Bar])",
+      "updateBefore": [ 1 ],
+      "arguments": [ {
+        "gamecomment": null,
+        "nodecomment": null
+      } ],
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] },
+          { "AN": "Bar" }
+        ]
+      }
     }
   ]
 }

@@ -154,8 +154,13 @@ function normalizeNode(obj, options) {
  */
 function normalizeNodeInfo(obj, options) {
   var o = {};
+  if (obj.multiple) o.multiple = true;
   if (obj.path) o.path = obj.path;
-  if (obj.node) o.node = normalizeNode(obj.node, options || {});
+  if (obj.node) {
+    o.node = o.multiple
+      ? normalizeNodes(obj.node.slice(), options)
+      : normalizeNode(obj.node, options || {});
+  }
   return o;
 }
 
