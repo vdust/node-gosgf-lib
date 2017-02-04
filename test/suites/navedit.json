@@ -548,6 +548,102 @@
         { "color": 0 }
       ]
     },
+    { "should": "reverse stone removal without setting stone again",
+      "sgf": "(;SZ[3];B[aa];W[ba];AE[aa])",
+      "updateBefore": [ 3 ],
+      "arguments": [
+        1,
+        [
+          { "x": 0, "y": 0 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] },
+          { "B": { "x": 0, "y": 0 } },
+          { "W": { "x": 1, "y": 0 } },
+          { }
+        ]
+      },
+      "board": [
+        { "color": 1 },
+        { "color": 2 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "reverse stone color without setting stone (AW)",
+      "sgf": "(;SZ[3];B[aa];W[ba];AW[aa])",
+      "updateBefore": [ 3 ],
+      "arguments": [
+        1,
+        [
+          { "x": 0, "y": 0 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] },
+          { "B": { "x": 0, "y": 0 } },
+          { "W": { "x": 1, "y": 0 } },
+          { }
+        ]
+      },
+      "board": [
+        { "color": 1 },
+        { "color": 2 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
+    { "should": "reverse stone color without setting stone (AB)",
+      "sgf": "(;SZ[3];B[aa];W[ba];AB[ba])",
+      "updateBefore": [ 3 ],
+      "arguments": [
+        2,
+        [
+          { "x": 1, "y": 0 }
+        ]
+      ],
+      "return": true,
+      "gametree": {
+        "nodes": [
+          { "SZ": [ 3, 3 ] },
+          { "B": { "x": 0, "y": 0 } },
+          { "W": { "x": 1, "y": 0 } },
+          { }
+        ]
+      },
+      "board": [
+        { "color": 1 },
+        { "color": 2 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 },
+
+        { "color": 0 },
+        { "color": 0 },
+        { "color": 0 }
+      ]
+    },
 
     { "group": "#marks",
       "merge": {

@@ -305,14 +305,34 @@
       "arguments": [ [ 1, 2 ] ],
       "return": true
     },
+    { "should": "return true if cursor node is before argument node",
+      "updateBefore": [ 1 ],
+      "arguments": [ [ 2 ] ],
+      "return": true
+    },
     { "should": "return true if path is in a children variation",
       "updateBefore": [ 0, 0 ],
       "arguments": [ [ 0, 1, 0 ] ],
       "return": true
     },
+    { "should": "return true if loose test with self",
+      "updateBefore": [ 1 ],
+      "arguments": [ [ 1 ], true ],
+      "return": true
+    },
+    { "should": "return false if strict test with self",
+      "updateBefore": [ 1 ],
+      "arguments": [ [ 1 ] ],
+      "return": false
+    },
     { "should": "return false if path is a parent of cursor",
       "updateBefore": [ 0, 1, 0 ],
       "arguments": [ [ 0, 0 ] ],
+      "return": false
+    },
+    { "should": "return fase if cursor node is after argument node",
+      "updateBefore": [ 2 ],
+      "arguments": [ [ 1 ] ],
       "return": false
     },
     { "should": "return false if path is a parent of cursor in the same variation",
@@ -335,14 +355,34 @@
       "arguments": [ [ 0 ] ],
       "return": true
     },
+    { "should": "return true if path is before cursor path",
+      "updateBefore": [ 2 ],
+      "arguments": [ [ 1 ] ],
+      "return": true
+    },
     { "should": "return true if path is in a parent variation",
       "updateBefore": [ 0, 1, 0 ],
       "arguments": [ [ 0, 0 ] ],
       "return": true
     },
+    { "should": "return true if loose test with self",
+      "updateBefore": [ 1 ],
+      "arguments": [ [ 1 ], true ],
+      "return": true
+    },
+    { "should": "return false if strict test with self",
+      "updateBefore": [ 1 ],
+      "arguments": [ [ 1 ] ],
+      "return": false
+    },
     { "should": "return false if path is a descendant of cursor",
       "updateBefore": [ 0, 0 ],
       "arguments": [ [ 0, 1, 0 ] ],
+      "return": false
+    },
+    { "should": "return false if path is after cursor path",
+      "updateBefore": [ 1 ],
+      "arguments": [ [ 2 ] ],
       "return": false
     },
     { "should": "return false if path is a descendant of cursor in the same variation",
