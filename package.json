@@ -9,6 +9,9 @@
     "dist": "grunt dist",
     "build-doc": "grunt doc"
   },
+  "bin": {
+    "sgf2json": "scripts/sgf2json.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vdust/node-gosgf-lib.git"
